@@ -10,7 +10,7 @@ part 'Product.g.dart';
 
 @freezed
 class Product with _$Product{
-  
+
 
   @JsonSerializable(explicitToJson: true)
   const factory Product({
@@ -28,8 +28,6 @@ class Product with _$Product{
     String? updatedAt,
   })= _Product;
 
-
   factory Product.fromJson(Map<String, dynamic>json)=> _$ProductFromJson(json);
-
 
 }

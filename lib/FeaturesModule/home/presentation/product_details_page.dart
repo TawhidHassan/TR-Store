@@ -16,6 +16,7 @@ import '../../../config/color/custom_color.dart';
 import '../../../config/util/text_style.dart';
 import '../../../custom_assets/assets.gen.dart';
 import '../../../routes/route_path.dart';
+import '../../cart/controller/CartController.dart';
 import '../controller/HomeController.dart';
 import 'Component/app_bar.dart';
 import 'Component/product_card.dart';
@@ -40,15 +41,8 @@ class ProductDetailsPage extends StatelessWidget {
             child: InkWell(
               onTap: () async {
                 // context.
-                context.goNamed(Routes.CartPage);
-                // navigationShell!.goBranch(
-                //   1,
-                //   // A common pattern when using bottom navigation bars is to support
-                //   // navigating to the initial location when tapping the item that is
-                //   // already active. This example demonstrates how to support this behavior,
-                //   // using the initialLocation parameter of goBranch.
-                //
-                // );
+                // context.goNamed(Routes.CartPage);
+                context.pushNamed(Routes.CartPage);
               },
               child: Icon(Icons.shopping_cart)),
           ),
@@ -112,11 +106,25 @@ class ProductDetailsPage extends StatelessWidget {
                                             style: mediumText(16.sp,color: Theme.of(context).textTheme.bodyMedium!.color!),
                                           ),
                                           SizedBox(height: 4.h,),
-                                          Chip(
-                                            label: Text(
-                                              controller.product.value!.category??"",
-                                              style: regularText(12.sp,color: Theme.of(context).textTheme.bodyLarge!.color!),
-                                            ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Chip(
+                                                label: Text(
+                                                  product!.category??"",
+                                                  style: regularText(12.sp,color: Theme.of(context).textTheme.bodyLarge!.color!),
+                                                ),
+                                              ),
+                                              InkWell(
+                                                  onTap: (){
+                                                    Get.find<CartController>().saveProduct(id: product!.id!,image: product!.image!,title: product!.title!,userId:product!.userId!);
+                                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                                      content: Text("Product successfully added to cart"),
+                                                      duration: Duration(milliseconds: 3000),
+                                                    ));
+                                                  },
+                                                  child: Icon(Icons.add_shopping_cart_outlined))
+                                            ],
                                           ),
                                           SizedBox(height: 4.h,),
                                           Text(

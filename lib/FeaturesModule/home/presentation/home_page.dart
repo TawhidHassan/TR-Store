@@ -9,7 +9,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:go_router/go_router.dart';
+import '../../../config/color/custom_color.dart';
 import '../../../custom_assets/assets.gen.dart';
+import '../../../routes/route_path.dart';
 import '../controller/HomeController.dart';
 import 'Component/app_bar.dart';
 import 'Component/product_card.dart';
@@ -159,6 +162,15 @@ class HomePage extends StatelessWidget {
                   .brightness == Brightness.dark ? Icons.sunny : Icons
                   .nightlight),),
           ),
+          Container(
+            margin: EdgeInsets.only(right: 16.w),
+            child: InkWell(
+                onTap: () async {
+                  // context.
+                  context.pushNamed(Routes.CartPage);
+                },
+                child: Icon(Icons.shopping_cart)),
+          ),
 
         ],
       ),
@@ -171,8 +183,8 @@ class HomePage extends StatelessWidget {
                 width: 1.0.sw,
                 padding: EdgeInsets.all(16),
                 child: controller.dataLoad.value ?
-                const SpinKitRotatingCircle(
-                  color: Colors.white,
+                 SpinKitRotatingCircle(
+                  color: Theme.of(context).brightness==Brightness.dark?CustomColor.primaryColor:CustomColor.textFieldBorder,
                   size: 50.0,
                 )
                     :

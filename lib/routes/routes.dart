@@ -73,26 +73,18 @@ class AppRouter {
               ),
             ],
           ),
-          // second branch (B)
-          StatefulShellBranch(
-            navigatorKey: _shellNavigatorBKey,
-            routes: [
-              // top route inside branch
-              GoRoute(
-                name: Routes.CartPage,
-                path: Routes.CartPagePath,
-                pageBuilder: (context, state) =>  NoTransitionPage(
-                  child: CartPage(),
-                ),
-                routes: [
-
-                ]
-              ),
-            ],
-          ),
         ],
       ),
 
+
+      GoRoute(
+          name: Routes.CartPage,
+          path: Routes.CartPagePath,
+          pageBuilder: (context, state) =>  const NoTransitionPage(
+            child: CartPage(),
+          ),
+
+      ),
       GoRoute(
         name: Routes.homePage,
         path: Routes.homePagePath,

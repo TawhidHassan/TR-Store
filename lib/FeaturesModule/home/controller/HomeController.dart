@@ -4,9 +4,6 @@ import 'package:TrStore/data/model/Product/Product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:permission_handler/permission_handler.dart';
-import '../../../Service/LoginService/save_user_data_local.dart';
 import '../../../Service/local_storage/local_storage.dart';
 import '../Repository/home_repository.dart';
 
@@ -20,10 +17,6 @@ class HomeController extends GetxController implements GetxService{
   final selectedShopImage = "".obs;
  // Rx<LocationModel?>  location=Rx<LocationModel?>(null);
 
-  List<String?>popular=[];
-  List<String?>popularResult=[];
-  LoginDataSave? loginDataSave;
-  Box? users;
 
 
 
@@ -43,8 +36,6 @@ class HomeController extends GetxController implements GetxService{
  @override
   void onInit() {
     // TODO: implement onInit
-   loginDataSave=LoginDataSave();
-   users =Hive.box('users');
 
     super.onInit();
   }

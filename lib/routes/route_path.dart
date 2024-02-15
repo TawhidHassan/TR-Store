@@ -17,19 +17,6 @@ class Routes {
   static const String CartPage = 'CartPage';
   static const String CartPagePath = '/CartPage';
 
-
-
-
-  static const String imageViewPage2 = 'imageViewPage2';
-  static const String imageViewPage2Path = 'imageViewPage2';
-
-
-  static const String imageViewPage = 'imageViewPage';
-  static const String imageViewPagePath = 'imageViewPage';
-
-  static const String tutorial = 'tutorial';
-  static const String tutorialPath = 'tutorial';
-
   //!auth
   static const String splashScreen = 'splashScreen';
   static const String unsupportedCountryScreen = 'splashScreen2';

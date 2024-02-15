@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:hive/hive.dart';
 
 import '../../network/api_services.dart';
 
@@ -44,17 +43,10 @@ const String appTheme = "appTheme";
 
 class LocalStorage {
   static Future<void> saveAppTheme({ThemeMode? themeMode}) async {
-    Box? box= await Hive.openBox('users');
-
-    await box.put("appTheme", themeMode.toString());
     debugPrint(themeMode.toString());
   }
 
-  static Future<String> getAppTheme() async {
-    Box? box= await Hive.openBox('users');
-    log.w(box.get("appTheme"));
-    return box.get("appTheme");
-  }
+
 
 
   static Future<void> saveEmailVerification(

@@ -1,4 +1,5 @@
 import 'package:TrStore/FeaturesModule/cart/controller/CartController.dart';
+import 'package:TrStore/data/Local/ProductLocal.dart';
 import 'package:TrStore/data/model/Product/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,36 +12,35 @@ import '../../../../routes/route_path.dart';
 
 
 
-class ProductCard extends StatelessWidget {
+class CartProductCard extends StatelessWidget {
   final Color? iconColor;
-  final Product? product;
+  final ProductLocal? product;
 
-  const ProductCard({Key? key,  this.iconColor, this.product}) : super(key: key);
+  const CartProductCard({Key? key,  this.iconColor, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        context.pushNamed(Routes.ProductDetailsPage,extra: product!);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(
-            color: Theme.of(context).brightness==Brightness.dark?CustomColor.primaryColor:CustomColor.textFieldBorder,
-          )
-        ),
-        width: 1.0.sw,
-        margin: EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.only(top: 0,left: 0,right: 0,bottom: 12),
-        child: Column(
-          children: [
-            CachedNetworkImage(
+    return Container(
+      height: 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(
+          color: Theme.of(context).brightness==Brightness.dark?CustomColor.primaryColor:CustomColor.textFieldBorder,
+        )
+      ),
+      width: 1.0.sw,
+      margin: EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 4,
+            child: CachedNetworkImage(
               imageUrl: product!.image??"",
               imageBuilder: (context, imageProvider) => Container(
                 height: 100,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(6),topRight: Radius.circular(6)),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(6),bottomLeft: Radius.circular(6)),
+
                   image: DecorationImage(
                       image: imageProvider,
                       fit: BoxFit.cover,
@@ -50,7 +50,10 @@ class ProductCard extends StatelessWidget {
               placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
-            Padding(
+          ),
+          Expanded(
+            flex: 8,
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,35 +66,29 @@ class ProductCard extends StatelessWidget {
                       children: [
                         SizedBox(height: 8.h,),
                         Text(
-                          product!.title??"",
-                          style: mediumText(16.sp,color: Theme.of(context).textTheme.bodyMedium!.color!),
+                          product!.title!.length>8?product!.title!.substring(8)+"..":product!.title!,
+                          style: mediumText(12.sp,color: Theme.of(context).textTheme.bodyMedium!.color!),
                         ),
                         SizedBox(height: 4.h,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Chip(
-                              label: Text(
-                                product!.category??"",
-                                style: regularText(12.sp,color: Theme.of(context).textTheme.bodyLarge!.color!),
-                              ),
+                            Text(
+                              "Price: ${product!.userId}\$",
+                              style: mediumText(12.sp,color: Theme.of(context).textTheme.bodyMedium!.color!),
                             ),
+
                             InkWell(
                                 onTap: (){
-                                  Get.find<CartController>().saveProduct(id: product!.id!,image: product!.image!,title: product!.title!,userId:product!.userId!);
+                                  Get.find<CartController>().deleteProduct(id: product!.id!);
                                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                     content: Text("Product successfully added to cart"),
                                     duration: Duration(milliseconds: 3000),
                                   ));
 
                                   },
-                                child: Icon(Icons.add_shopping_cart_outlined))
+                                child: Icon(Icons.delete))
                           ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        Text(
-                          product!.publishedAt??"",
-                          style: regularText(10.sp,color: Theme.of(context).textTheme.bodySmall!.color!),
                         ),
                       ],
                     ),
@@ -100,9 +97,9 @@ class ProductCard extends StatelessWidget {
 
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

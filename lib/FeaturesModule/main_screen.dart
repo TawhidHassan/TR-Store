@@ -36,22 +36,22 @@ class MainScreen extends StatelessWidget {
       //       child: Text("Home")),
       // ),
       body: navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: navigationShell.currentIndex,
-        // selectedIndex:
-        items:  [
-          BottomNavigationBarItem(label: tr(Strings.Home), icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: tr(Strings.Cart), icon: Icon(Icons.shopping_cart)),
-          // NavigationDestination(label: 'Home', icon: Icon(Icons.home)),
-          // NavigationDestination(label: 'Image Generate', icon: Icon(Icons.image)),
-        ],
-        // destinations: const [
-        //
-        // ],
-        onTap: _goBranch,
-        // onDestinationSelected: ,
-
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: navigationShell.currentIndex,
+      //   // selectedIndex:
+      //   items:  [
+      //     BottomNavigationBarItem(label: tr(Strings.Home), icon: Icon(Icons.home)),
+      //     BottomNavigationBarItem(label: tr(Strings.Cart), icon: Icon(Icons.shopping_cart)),
+      //     // NavigationDestination(label: 'Home', icon: Icon(Icons.home)),
+      //     // NavigationDestination(label: 'Image Generate', icon: Icon(Icons.image)),
+      //   ],
+      //   // destinations: const [
+      //   //
+      //   // ],
+      //   onTap: _goBranch,
+      //   // onDestinationSelected: ,
+      //
+      // ),
     );
   }
 }

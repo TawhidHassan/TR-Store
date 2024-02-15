@@ -1,5 +1,6 @@
 
 
+import 'package:TrStore/FeaturesModule/cart/controller/CartController.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -37,6 +38,7 @@ Future<Map<String, Map<String, String>>> init() async {
   // Controller
 
   Get.lazyPut(() => HomeController(homeRepository: Get.find<HomeRepository>()));
+  Get.lazyPut(() => CartController());
 
 
 
