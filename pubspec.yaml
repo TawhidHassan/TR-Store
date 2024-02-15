@@ -119,6 +119,8 @@ dependencies:
   #country flag
   country_flags: ^2.2.0
 
+  #shimmer
+  shimmer: ^3.0.0
 
   #image
   camera: ^0.10.5+3

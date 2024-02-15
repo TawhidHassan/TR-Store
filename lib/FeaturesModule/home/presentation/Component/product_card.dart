@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shimmer/shimmer.dart';
+import '../../../../Widgets/Simmer/custom_simmer.dart';
 import '../../../../config/color/custom_color.dart';
 import '../../../../config/util/text_style.dart';
 import '../../../../routes/route_path.dart';
@@ -15,8 +17,8 @@ class ProductCard extends StatelessWidget {
   final Color? iconColor;
   final Product? product;
 
-  const ProductCard({Key? key,  this.iconColor, this.product}) : super(key: key);
-
+  ProductCard({Key? key,  this.iconColor, this.product}) : super(key: key);
+ var controller= Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -38,7 +40,7 @@ class ProductCard extends StatelessWidget {
             CachedNetworkImage(
               imageUrl: product!.image??"",
               imageBuilder: (context, imageProvider) => Container(
-                height: 100,
+                height: 150,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(6),topRight: Radius.circular(6)),
                   image: DecorationImage(
@@ -47,7 +49,7 @@ class ProductCard extends StatelessWidget {
                       colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
                 ),
               ),
-              placeholder: (context, url) => CircularProgressIndicator(),
+              placeholder: (context, url) => CustomeSimmer(height: 150,width: 120,radius: 8,),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
             Padding(
@@ -76,16 +78,7 @@ class ProductCard extends StatelessWidget {
                                 style: regularText(12.sp,color: Theme.of(context).textTheme.bodyLarge!.color!),
                               ),
                             ),
-                            InkWell(
-                                onTap: (){
-                                  Get.find<CartController>().saveProduct(id: product!.id!,image: product!.image!,title: product!.title!,userId:product!.userId!);
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                    content: Text("Product successfully added to cart"),
-                                    duration: Duration(milliseconds: 3000),
-                                  ));
 
-                                  },
-                                child: Icon(Icons.add_shopping_cart_outlined))
                           ],
                         ),
                         SizedBox(height: 4.h,),

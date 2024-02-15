@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../Widgets/Simmer/custom_simmer.dart';
 import '../../../../config/color/custom_color.dart';
 import '../../../../config/util/text_style.dart';
 import '../../../../routes/route_path.dart';
@@ -47,7 +48,7 @@ class CartProductCard extends StatelessWidget {
                       colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
                 ),
               ),
-              placeholder: (context, url) => CircularProgressIndicator(),
+              placeholder: (context, url) => CustomeSimmer(height: 100,width: 120,radius: 8,),
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),

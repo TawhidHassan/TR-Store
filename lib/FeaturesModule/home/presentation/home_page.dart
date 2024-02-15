@@ -10,6 +10,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shimmer/shimmer.dart';
+import '../../../Widgets/Simmer/custom_simmer.dart';
+import '../../../Widgets/cart_icon_widget.dart';
 import '../../../config/color/custom_color.dart';
 import '../../../custom_assets/assets.gen.dart';
 import '../../../routes/route_path.dart';
@@ -25,7 +28,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.getProducts();
+    ///Product get call
+    controller.getProducts(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -169,7 +173,7 @@ class HomePage extends StatelessWidget {
                   // context.
                   context.pushNamed(Routes.CartPage);
                 },
-                child: Icon(Icons.shopping_cart)),
+                child:CartIconCount(top: -16,start: 16,)),
           ),
 
         ],
@@ -183,9 +187,21 @@ class HomePage extends StatelessWidget {
                 width: 1.0.sw,
                 padding: EdgeInsets.all(16),
                 child: controller.dataLoad.value ?
-                 SpinKitRotatingCircle(
-                  color: Theme.of(context).brightness==Brightness.dark?CustomColor.primaryColor:CustomColor.textFieldBorder,
-                  size: 50.0,
+                CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: SizedBox(height: 15.h,),
+                    ),
+                    SliverToBoxAdapter(
+                        child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: 6,
+                            itemBuilder: (context, index) =>
+                                CustomeSimmer(height: 120,width: 120,radius: 8,),
+                        )
+                    ),
+                  ],
                 )
                     :
                 CustomScrollView(

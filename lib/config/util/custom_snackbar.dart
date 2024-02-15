@@ -1,4 +1,6 @@
 
+import 'package:TrStore/FeaturesModule/cart/controller/CartController.dart';
+import 'package:TrStore/FeaturesModule/home/controller/HomeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -11,6 +13,7 @@ class CustomSnackBar {
     return Get.snackbar(
       'Success',
       message,
+      overlayColor: Colors.green,
       icon: Icon(
         Icons.check_circle,
         color: Colors.green,

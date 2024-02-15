@@ -24,17 +24,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar:AppBar(
-      //   title: Text("Main Page"),
-      // ),
-
-      // body: Container(
-      //   child: InkWell(
-      //       onTap: (){
-      //         context.pushNamed(Routes.homePage);
-      //       },
-      //       child: Text("Home")),
-      // ),
+      
       body: navigationShell,
       // bottomNavigationBar: BottomNavigationBar(
       //   currentIndex: navigationShell.currentIndex,

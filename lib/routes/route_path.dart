@@ -17,6 +17,9 @@ class Routes {
   static const String CartPage = 'CartPage';
   static const String CartPagePath = '/CartPage';
 
+  static const String ErrorPage = 'ErrorPage';
+  static const String ErrorPagePath = '/ErrorPage';
+
   //!auth
   static const String splashScreen = 'splashScreen';
   static const String unsupportedCountryScreen = 'splashScreen2';

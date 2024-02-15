@@ -2,6 +2,7 @@ import 'dart:io';
 
 
 import 'package:TrStore/data/model/Product/ProductResponse.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';
 
 import '../../../config/Strings/api_endpoint.dart';
@@ -20,14 +21,14 @@ class HomeRepository{
   }
 
 
-  Future getProducts() async{
+  Future getProducts(BuildContext context) async{
 
-    final userRaw =await apiMethod.get(duration:200 ,url: ApiEndpoint.GET_ALL_PRODUCTS,isBasic: true,showResult: true);
+    final userRaw =await apiMethod.get(context:context ,duration:200 ,url: ApiEndpoint.GET_ALL_PRODUCTS,isBasic: true,showResult: true);
     // Logger().d(userRaw);
     return userRaw;
   }
 
-  Future getProductsDetails(int? id) async{
+  Future getProductsDetails(BuildContext context,int? id) async{
 
     final userRaw =await apiMethod.get(duration:200 ,url: ApiEndpoint.GET_ALL_PRODUCTS+"/${id}",isBasic: true,showResult: true);
     // Logger().d(userRaw);

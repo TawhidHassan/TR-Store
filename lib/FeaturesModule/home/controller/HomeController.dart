@@ -17,9 +17,7 @@ class HomeController extends GetxController implements GetxService{
   final selectedShopImage = "".obs;
  // Rx<LocationModel?>  location=Rx<LocationModel?>(null);
 
-
-
-
+  final connectionLost = false.obs;
   final dataLoad = false.obs;
   final detailDataLoad = false.obs;
   RxList<Product>? productList=RxList<Product>();
@@ -53,9 +51,9 @@ class HomeController extends GetxController implements GetxService{
 
   }
 
-  void getProducts() {
+  void getProducts(BuildContext context) {
     dataLoad.value=true;
-    homeRepository!.getProducts().then((value) {
+    homeRepository!.getProducts(context).then((value) {
       dataLoad.value=false;
       if(value!=null){
         productList!.value = (value as List)
@@ -65,9 +63,9 @@ class HomeController extends GetxController implements GetxService{
     });
   }
 
-  void getProductsDetails(int? id) {
+  void getProductsDetails(BuildContext context,int? id) {
     detailDataLoad.value=true;
-    homeRepository!.getProductsDetails(id).then((value) {
+    homeRepository!.getProductsDetails(context,id).then((value) {
       detailDataLoad.value=false;
       if(value!=null){
         product.value = Product.fromJson(value);

@@ -24,11 +24,12 @@ class CartController extends GetxController implements GetxService{
 
 
 
+  final connectionLost = false.obs;
   final dataLoad = false.obs;
   final detailDataLoad = false.obs;
   RxList<ProductLocal>? productList=RxList<ProductLocal>();
   Rx<Product?> product = Rx<Product?>(null);
-
+  var dbHelper = DBHelper();
 
 
   @override
@@ -41,38 +42,52 @@ class CartController extends GetxController implements GetxService{
   @override
   void onInit() {
     // TODO: implement onInit
-
-    var dbHelper = DBHelper();
     dbHelper.fetchAllProducts().then((value){
-      Logger().i(value!.length);
-      productList!.value=value;
+      if(value!=null&&value.isNotEmpty){
+        productList!.value=value;
+      }else{
+        productList!.value=[];
+      }
     });
+
+    // checkProductExist(1);
+    // checkProductExist(10);
     super.onInit();
   }
 
+  bool checkProductExist(int id){
 
+   var exist=productList!.where((element) => element.id==id);
+
+    return exist.isNotEmpty;
+  }
 
 
   void saveProduct({int? id, userId, String? title, image}) {
     dataLoad.value=true;
-    var dbHelper = DBHelper();
     dbHelper.addProduct(ProductLocal(
             userId: userId,
             title: title,
             image:image ,
             id: id
         )
-    );    // _showSnackBar("Data saved successfully");
+    );
+    onInit();
+    update();
   }
 
   void deleteProduct({int? id}) {
     dataLoad.value=true;
-    var dbHelper = DBHelper();
     dbHelper.deleteProduct(id!);
     dbHelper.fetchAllProducts().then((value){
-      Logger().i(value!.length);
-      productList!.value=value;
-    });// _showSnackBar("Data saved successfully");
+      if(value!=null&& value.isNotEmpty){
+        productList!.value=value;
+      }else{
+        productList!.value=[];
+      }
+
+    });
+    onInit();
   }
 
 

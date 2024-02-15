@@ -2,6 +2,8 @@ import 'package:TrStore/FeaturesModule/home/presentation/product_details_page.da
 import 'package:TrStore/data/model/Product/Product.dart';
 import 'package:TrStore/routes/route_path.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../FeaturesModule/error/presentation/error_page.dart';
@@ -12,40 +14,16 @@ import '../FeaturesModule/main_screen.dart';
 
 
 
-// class AppRoutes {
-//   static Route onGenerateRoutes(RouteSettings settings) {
-//     final Map? args = settings.arguments as Map?;
-//     switch (settings.name) {
-//       case '/':
-//         return _materialRoute(const SplashPage(key: ,));
-//
-//       case '/home':
-//         return _materialRoute(HomePage());
-//
-//
-//       default:
-//         return _materialRoute(const HomePage());
-//     }
-//   }
-//
-//   static Route<dynamic> _materialRoute(Widget view) {
-//     return MaterialPageRoute(builder: (_) => view);
-//   }
-// }
-
-
 class AppRouter {
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
-  static final _shellNavigatorKey = GlobalKey<NavigatorState>();
   static final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
-  static final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
 
 
   static final GoRouter routerx = GoRouter(
     initialLocation: Routes.mainPagePath,
+    navigatorKey: Get.key,
     debugLogDiagnostics: true,
-    navigatorKey: _rootNavigatorKey,
     routes: [
 
       StatefulShellRoute.indexedStack(
@@ -96,6 +74,13 @@ class AppRouter {
         path: Routes.ProductDetailsPagePath,
         pageBuilder: (context, state) =>  NoTransitionPage(
           child: ProductDetailsPage(product: state.extra as Product),
+        ),
+      ),
+      GoRoute(
+        name: Routes.ErrorPage,
+        path: Routes.ErrorPagePath,
+        pageBuilder: (context, state) =>  NoTransitionPage(
+          child: ErrorPage(),
         ),
       ),
 

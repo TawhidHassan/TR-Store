@@ -1,13 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 import '../Data/model/common/error_message_model.dart';
+import '../FeaturesModule/cart/controller/CartController.dart';
+import '../FeaturesModule/home/controller/HomeController.dart';
 import '../Service/local_storage/local_storage.dart';
 import '../config/Strings/api_endpoint.dart';
 import '../config/util/custom_snackbar.dart';
 import '../config/util/logger.dart';
+import '../routes/route_path.dart';
 
 
 
@@ -32,14 +39,13 @@ Future<Map<String, String>> bearerHeaderInfo() async {
 class ApiMethod {
   ApiMethod();
 
-
-
   // Get method
   Future get({ String? url,
         bool? isBasic,
         int code = 200,
         int duration = 15,
         bool showResult = false,
+        BuildContext? context
       }) async {
     log.i('|📍📍📍|----------------- [[ GET ]] method details start -----------------|📍📍📍|');
     log.i(url);
@@ -70,9 +76,7 @@ class ApiMethod {
         log.e('unknown error hitted in status code${jsonDecode(response.body)}');
 
         // ErrorResponse res = ErrorResponse.fromJson(jsonDecode(response.body));
-
         // CustomSnackBar.error(res.message.error.join(''));
-
 
         return jsonDecode(response.body);
       }
@@ -80,7 +84,7 @@ class ApiMethod {
       log.e('🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
 
       CustomSnackBar.error('Check your Internet Connection and try again!');
-
+      context!.pushNamed(Routes.ErrorPage);
       return null;
     } on TimeoutException {
       log.e('🐞🐞🐞 Error Alert Timeout Exception🐞🐞🐞');
@@ -88,6 +92,8 @@ class ApiMethod {
       log.e('Time out exception$url');
 
       CustomSnackBar.error('Something Went Wrong! Try again');
+
+      context!.pushNamed(Routes.ErrorPage);
 
       return null;
     } on http.ClientException catch (err, stackrace) {

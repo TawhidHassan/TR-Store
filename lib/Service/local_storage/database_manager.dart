@@ -74,4 +74,15 @@ class DBHelper{
     );
   }
 
+  Future<bool> findProduct(int id) async {
+    Database database = await db;
+    var dbclient = await db;
+    final count = await dbclient.query(
+      "ProductLocal",
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    return count.isEmpty;
+  }
+
 }

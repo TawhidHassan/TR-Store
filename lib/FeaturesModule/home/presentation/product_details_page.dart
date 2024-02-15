@@ -12,6 +12,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:go_router/go_router.dart';
+import '../../../Widgets/Button/custom_button.dart';
+import '../../../Widgets/Simmer/custom_simmer.dart';
+import '../../../Widgets/cart_icon_widget.dart';
 import '../../../config/color/custom_color.dart';
 import '../../../config/util/text_style.dart';
 import '../../../custom_assets/assets.gen.dart';
@@ -24,13 +27,13 @@ import 'Component/product_card.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final Product? product;
-  const ProductDetailsPage({super.key, this.product});
+   ProductDetailsPage({super.key, this.product});
 
   static final controller = Get.find<HomeController>();
-
+  var cartController= Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
-    controller.getProductsDetails(product!.id);
+    controller.getProductsDetails(context,product!.id);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -39,16 +42,16 @@ class ProductDetailsPage extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: 16.w),
             child: InkWell(
-              onTap: () async {
-                // context.
-                // context.goNamed(Routes.CartPage);
-                context.pushNamed(Routes.CartPage);
-              },
-              child: Icon(Icons.shopping_cart)),
+                onTap: () async {
+                  // context.
+                  context.pushNamed(Routes.CartPage);
+                },
+                child:CartIconCount(top: -16,start: 16,)),
           ),
 
         ],
       ),
+
       body: GetBuilder<HomeController>(
         assignId: true,
         builder: (controller) {
@@ -58,10 +61,26 @@ class ProductDetailsPage extends StatelessWidget {
                 width: 1.0.sw,
                 padding: EdgeInsets.all(16),
                 child: controller.detailDataLoad.value ?
-                const SpinKitRotatingCircle(
-                  color: Colors.white,
-                  size: 50.0,
-                )
+                 const CustomScrollView(
+                  slivers: [
+                  SliverToBoxAdapter(
+                   child: Column(
+                     children: [
+                       CustomeSimmer(height: 120,width: 120,radius: 8,),
+                       SizedBox(height: 12,),
+                       CustomeSimmer(height: 10,width: 120,radius: 8,),
+                       SizedBox(height: 4,),
+                       CustomeSimmer(height: 12,width: 10,radius: 8,),
+                       SizedBox(height: 4,),
+                       CustomeSimmer(height: 200,width: 10,radius: 8,),
+                       SizedBox(height: 4,),
+                       CustomeSimmer(height: 400,width: 10,radius: 8,),
+
+                     ],
+                   )
+                    ),
+                  ]
+                 )
                     :
                 CustomScrollView(
                   slivers: [
@@ -86,7 +105,7 @@ class ProductDetailsPage extends StatelessWidget {
                                         colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
                                   ),
                                 ),
-                                placeholder: (context, url) => CircularProgressIndicator(),
+                                placeholder: (context, url) => CustomeSimmer(height: 120,width: 120,radius: 8,),
                                 errorWidget: (context, url, error) => Icon(Icons.error),
                               ),
                               Padding(
@@ -115,21 +134,32 @@ class ProductDetailsPage extends StatelessWidget {
                                                   style: regularText(12.sp,color: Theme.of(context).textTheme.bodyLarge!.color!),
                                                 ),
                                               ),
-                                              InkWell(
-                                                  onTap: (){
-                                                    Get.find<CartController>().saveProduct(id: product!.id!,image: product!.image!,title: product!.title!,userId:product!.userId!);
-                                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                                      content: Text("Product successfully added to cart"),
-                                                      duration: Duration(milliseconds: 3000),
-                                                    ));
-                                                  },
-                                                  child: Icon(Icons.add_shopping_cart_outlined))
+
+                                              cartController.checkProductExist(product!.id!)
+                                                  ?
+                                              SizedBox()
+                                                  :
+                                              CustomButton(
+                                                onTap: (){
+                                                  cartController.saveProduct(id: product!.id!,image: product!.image!,title: product!.title!,userId:product!.userId!);
+                                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                                    content: Text("Product successfully added to cart"),
+                                                    duration: Duration(milliseconds: 3000),
+                                                  ));
+                                                },
+                                                title: "Add To Cart",
+                                                color: Colors.orange,
+                                                height: 42,
+                                                width:85.w,
+                                                textSize: 12,
+                                                textColor: CustomColor.kPrimaryColorx,
+                                              )
                                             ],
                                           ),
                                           SizedBox(height: 4.h,),
                                           Text(
                                             "Price: ${controller.product.value!.userId}\$",
-                                            style: regularText(14.sp,color: Colors.orange),
+                                            style: regularText(16.sp,color: Colors.orange),
                                           ),
                                           SizedBox(height: 4.h,),
                                           Text(
