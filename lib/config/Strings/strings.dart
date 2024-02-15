@@ -10,7 +10,7 @@ class Strings {
 
   // common
   static const String hiThere = 'Hi There';
-  static const String welcomeAppName = 'Welcome to Asis Bot';
+  static const String welcomeAppName = 'Welcome to  TR Store';
 
 
   static const String TextChat = 'Text Chat';

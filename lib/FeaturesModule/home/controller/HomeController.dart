@@ -28,7 +28,9 @@ class HomeController extends GetxController implements GetxService{
 
 
   final dataLoad = false.obs;
+  final detailDataLoad = false.obs;
   RxList<Product>? productList=RxList<Product>();
+  Rx<Product?> product = Rx<Product?>(null);
 
 
 
@@ -68,6 +70,16 @@ class HomeController extends GetxController implements GetxService{
         productList!.value = (value as List)
             .map((item) => Product.fromJson(item))
             .toList();
+      }
+    });
+  }
+
+  void getProductsDetails(int? id) {
+    detailDataLoad.value=true;
+    homeRepository!.getProductsDetails(id).then((value) {
+      detailDataLoad.value=false;
+      if(value!=null){
+        product.value = Product.fromJson(value);
       }
     });
   }

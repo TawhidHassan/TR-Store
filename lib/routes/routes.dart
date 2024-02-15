@@ -1,3 +1,5 @@
+import 'package:TrStore/FeaturesModule/home/presentation/product_details_page.dart';
+import 'package:TrStore/data/model/Product/Product.dart';
 import 'package:TrStore/routes/route_path.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -65,7 +67,9 @@ class AppRouter {
                 pageBuilder: (context, state) => const NoTransitionPage(
                   child: HomePage(),
                 ),
-                routes: const [],
+                routes:  [
+
+                ],
               ),
             ],
           ),
@@ -95,7 +99,13 @@ class AppRouter {
         builder: (context, state) => const HomePage(),
       ),
 
-
+      GoRoute(
+        name: Routes.ProductDetailsPage,
+        path: Routes.ProductDetailsPagePath,
+        pageBuilder: (context, state) =>  NoTransitionPage(
+          child: ProductDetailsPage(product: state.extra as Product),
+        ),
+      ),
 
 
     ],

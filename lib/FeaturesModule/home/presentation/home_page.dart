@@ -183,7 +183,7 @@ class HomePage extends StatelessWidget {
                     ),
                     SliverToBoxAdapter(
                         child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: controller.productList!.value.length,
                             itemBuilder: (context, index) =>

@@ -2,8 +2,10 @@ import 'package:TrStore/data/model/Product/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../config/color/custom_color.dart';
 import '../../../../config/util/text_style.dart';
+import '../../../../routes/route_path.dart';
 
 
 
@@ -15,73 +17,81 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Row(
+    return InkWell(
+      onTap: (){
+        context.pushNamed(Routes.ProductDetailsPage,extra: product!);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(
+            color: Theme.of(context).brightness==Brightness.dark?CustomColor.primaryColor:CustomColor.textFieldBorder,
+          )
+        ),
+        width: 1.0.sw,
+        margin: EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.only(top: 12,left: 0,right: 0,bottom: 12),
+        child: Column(
           children: [
-            Expanded(
-                flex: 1,
-                child: Container(
-                  width: 1.0.sw,
-                  padding: const EdgeInsets.only(top: 12,left: 0,right: 0),
-                  child: Column(
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl: product!.thumbnail??"",
-                        imageBuilder: (context, imageProvider) => Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
-                          ),
+            CachedNetworkImage(
+              imageUrl: product!.thumbnail??"",
+              imageBuilder: (context, imageProvider) => Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+                ),
+              ),
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 9,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 8.h,),
+                        Text(
+                          product!.title??"",
+                          style: mediumText(16.sp,color: Theme.of(context).textTheme.bodyMedium!.color!),
                         ),
-                        placeholder: (context, url) => CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 9,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product!.title??"",
-                                  style: mediumText(16.sp,color: Theme.of(context).textTheme.bodyMedium!.color!),
-                                ),
-                                SizedBox(height: 4.h,),
-                                Chip(
-                                  label: Text(
-                                    product!.category??"",
-                                    style: regularText(12.sp,color: Theme.of(context).textTheme.bodyLarge!.color!),
-                                  ),
-                                ),
-                                SizedBox(height: 4.h,),
-                                Text(
-                                  product!.publishedAt??"",
-                                  style: regularText(10.sp,color: Theme.of(context).textTheme.bodySmall!.color!),
-                                ),
-                              ],
+                        SizedBox(height: 4.h,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Chip(
+                              label: Text(
+                                product!.category??"",
+                                style: regularText(12.sp,color: Theme.of(context).textTheme.bodyLarge!.color!),
+                              ),
                             ),
-                          ),
-
-
-                        ],
-                      )
-                    ],
+                            Icon(Icons.add_shopping_cart_outlined)
+                          ],
+                        ),
+                        SizedBox(height: 4.h,),
+                        Text(
+                          product!.publishedAt??"",
+                          style: regularText(10.sp,color: Theme.of(context).textTheme.bodySmall!.color!),
+                        ),
+                      ],
+                    ),
                   ),
-                )
+
+
+                ],
+              ),
             )
           ],
         ),
-        SizedBox(height: 8,),
-        Divider(height: 1.0,color: Theme.of(context).brightness==Brightness.dark?CustomColor.primaryColor:CustomColor.textFieldBorder,thickness: 1,),
-      ],
+      ),
     );
   }
 }

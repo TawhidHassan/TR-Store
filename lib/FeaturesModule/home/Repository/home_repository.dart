@@ -27,6 +27,14 @@ class HomeRepository{
     return userRaw;
   }
 
+  Future getProductsDetails(int? id) async{
+
+    final userRaw =await apiMethod.get(duration:200 ,url: ApiEndpoint.GET_ALL_PRODUCTS+"/${id}",isBasic: true,showResult: true);
+    // Logger().d(userRaw);
+    return userRaw;
+  }
+
+
 
 
 

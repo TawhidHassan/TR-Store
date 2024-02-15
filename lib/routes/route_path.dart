@@ -11,6 +11,9 @@ class Routes {
   static const String homePage = 'home';
   static const String homePagePath = '/home';
 
+  static const String ProductDetailsPage = 'ProductDetailsPage';
+  static const String ProductDetailsPagePath = '/ProductDetailsPage';
+
   static const String CartPage = 'CartPage';
   static const String CartPagePath = '/CartPage';
 
