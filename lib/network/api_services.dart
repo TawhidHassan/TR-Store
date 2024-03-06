@@ -75,7 +75,7 @@ class ApiMethod {
 
         log.e('unknown error hitted in status code${jsonDecode(response.body)}');
 
-        // ErrorResponse res = ErrorResponse.fromJson(jsonDecode(response.body));
+        ErrorResponse res = ErrorResponse.fromJson(jsonDecode(response.body));
         // CustomSnackBar.error(res.message.error.join(''));
 
         return jsonDecode(response.body);
@@ -104,7 +104,7 @@ class ApiMethod {
       log.e(err.toString());
 
       log.e(stackrace.toString());
-
+      context!.pushNamed(Routes.ErrorPage);
       return null;
     } catch (e) {
       log.e('🐞🐞🐞 Other Error Alert 🐞🐞🐞');
@@ -112,7 +112,7 @@ class ApiMethod {
       log.e('❌❌❌ unlisted error received');
 
       log.e("❌❌❌ $e");
-
+      context!.pushNamed(Routes.ErrorPage);
       return null;
     }
   }

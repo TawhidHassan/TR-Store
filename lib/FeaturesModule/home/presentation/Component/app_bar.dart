@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../config/Strings/strings.dart';
 import '../../../../config/util/text_style.dart';
@@ -17,10 +18,18 @@ class CustomeAppBar extends StatelessWidget {
       padding: const EdgeInsets.only(top: 12,),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Theme.of(context).primaryColor,
-            child: Assets.icons.user.image(),
+          InkWell(
+            onTap: (){
+              context.pushNamed("news", pathParameters: {
+                "id": "dwirandyh",
+                "path": "flutter-deeplink-example"
+              });
+            },
+            child: CircleAvatar(
+              radius: 30,
+              backgroundColor: Theme.of(context).primaryColor,
+              child: Assets.icons.user.image(),
+            ),
           ),
           SizedBox(width: 14.w,),
           Column(

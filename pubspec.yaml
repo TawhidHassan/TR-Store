@@ -32,6 +32,12 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
 
+  #collection this package help you to list compare ,sum,average,compare list-of object ,maker group
+  collection: ^1.18.0
+
+  #error handling
+  either_dart: ^1.0.0
+
   #router
   go_router: ^13.0.1
 

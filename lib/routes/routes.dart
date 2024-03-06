@@ -10,6 +10,7 @@ import '../../FeaturesModule/error/presentation/error_page.dart';
 import '../../FeaturesModule/home/presentation/home_page.dart';
 import '../FeaturesModule/cart/presentation/cart_page.dart';
 import '../FeaturesModule/main_screen.dart';
+import '../FeaturesModule/news/news_page.dart';
 
 
 
@@ -46,6 +47,15 @@ class AppRouter {
                   child: HomePage(),
                 ),
                 routes:  [
+
+                  GoRoute(
+                    path: "news/:id/:path",
+                    name: "news",
+                    builder: (context, state) => NewsPage(
+                      userId: state.pathParameters["id"].toString(),
+                      path: state.pathParameters["path"].toString(),
+                    ),
+                  )
 
                 ],
               ),
